@@ -6,30 +6,44 @@ const init = () => {
 }
 
 const displayDrink = drink => {
-    //add glass type and instructions
     console.log(drink);
     let drinksDiv = document.querySelector("#drinks");
     let display = document.createElement("h1");
     let drinkName = drink.strDrink;
+
+    let servingGlassData = "Serving Glass: " + drink.strGlass;
+    let servingGlass = document.createElement("h2");
+
+    let instructionsData = drink.strInstructions;
+    let instructions = document.createElement("p");
 
     let thumbNail = drink.strDrinkThumb;
     let thumbNailImage = document.createElement("img");
     thumbNailImage.src = thumbNail;
     thumbNailImage.className = "drinkImage";
 
-    processDrinkIngredients(drink);
+    let ingredients  = processDrinkIngredients(drink);
+    let ingredientsContainer = document.createElement("ul");
+    
+    ingredients.forEach(ingredient => {
+        let ingredientLi = document.createElement("li");
+        ingredientLi.innerHTML = ingredient;
+        ingredientsContainer.appendChild(ingredientLi);
+    });
 
-    console.log(thumbNail);
     display.appendChild(document.createTextNode(drinkName));
     drinksDiv.appendChild(display);
     drinksDiv.appendChild(thumbNailImage);
-
+    drinksDiv.appendChild(servingGlass);
+    drinksDiv.appendChild(ingredientsContainer);
+    drinksDiv.appendChild(instructions);
+    servingGlass.appendChild(document.createTextNode(servingGlassData));
+    instructions.appendChild(document.createTextNode(instructionsData));
     
 }
 
 const processDrinkIngredients = drink => {
     let ingredients = [];
-    //let ingredient1 = drink.strMeasure1 + " " + drink.strIngredient1;
     for(let i=1; i <= 15; i++) {
         if (drink["strIngredient" + i] != null) {
             let ingredient;
@@ -57,6 +71,8 @@ const searchByName = e => {
         if(xhr.readyState == 4) {
             let response = JSON.parse(xhr.responseText);
             let drinks = response.drinks;
+            let drinksDiv = document.querySelector('#drinks');
+            drinksDiv.innerHTML = '';
             drinks.forEach((drink) => {
                 displayDrink(drink);
             });
