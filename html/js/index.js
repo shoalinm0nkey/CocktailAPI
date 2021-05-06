@@ -6,7 +6,6 @@ const init = () => {
 }
 
 const displayDrink = drink => {
-    console.log(drink);
     let drinksDiv = document.querySelector("#drinks");
     let display = document.createElement("h1");
     let drinkName = drink.strDrink;
@@ -24,6 +23,21 @@ const displayDrink = drink => {
 
     let ingredients  = processDrinkIngredients(drink);
     let ingredientsContainer = document.createElement("ul");
+
+    let saveButton = document.createElement("button");
+    saveButton.appendChild(document.createTextNode("Save to Favorites"));
+
+    saveButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        let payload = {
+                'drinkName': drinkName,
+                'drinkImage': thumbNail,
+                'servingGlass': drink.strGlass,
+                'ingredients': ingredients,
+                'instructions': instructionsData
+            };
+        saveDrink(payload);
+    });
     
     ingredients.forEach(ingredient => {
         let ingredientLi = document.createElement("li");
@@ -34,6 +48,7 @@ const displayDrink = drink => {
     display.appendChild(document.createTextNode(drinkName));
     drinksDiv.appendChild(display);
     drinksDiv.appendChild(thumbNailImage);
+    drinksDiv.appendChild(saveButton);
     drinksDiv.appendChild(servingGlass);
     drinksDiv.appendChild(ingredientsContainer);
     drinksDiv.appendChild(instructions);
@@ -55,7 +70,6 @@ const processDrinkIngredients = drink => {
             ingredients.push(ingredient);
         }
     }
-    console.log(ingredients);
     return ingredients;
 }
 
@@ -79,6 +93,24 @@ const searchByName = e => {
         }
     }
     xhr.send(null);
+}
+
+const saveDrink = (drinkData) => {
+    let params = drinkData;
+    let xhr = new XMLHttpRequest();
+    let url = "http://127.0.0.1:3000/api/drinks"
+    xhr.open("POST", url);
+
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.onreadystatechange = () => {
+        if(xhr.readyState == 4) {
+            console.log("sent", params);
+        }
+        
+    };
+    xhr.send(JSON.stringify(params));
+    return false;
 }
 
 window.addEventListener("load", init);

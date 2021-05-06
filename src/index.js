@@ -1,5 +1,8 @@
 const express = require("express");
+const bodyParser = require('body-parser');
 const app = express();
+app.use(bodyParser.urlencoded({extended : true}));
+app.use(bodyParser.json());
 const DrinkManager = require("./DrinkManager");
 const manager = new DrinkManager();
 const cors = require('cors');
@@ -12,18 +15,24 @@ app.get("/api/drinks", (req, res) => {
     });
 });
 
+app.post("/api/drinks", (req, res) => {
+    console.log(req.body);
+    let drinkName = req.body.drinkName;
+    let drinkImage = req.body.drinkImage;
+    let servingGlass = req.body.servingGlass;
+    let ingredients = req.body.ingredients.join('|');
+    let instructions = req.body.instructions;
+
+    manager.addDrink(drinkName, drinkImage, servingGlass, ingredients, instructions, data => {
+        console.log(data);
+    });
+    res.send({"status": "ok"});
+
+})
+
 app.listen(3000, () => {
     console.log("Hello World 3000");
 });
-
-manager.allDrinks(data => {
-    console.log(data);
-});
-
-
-// manager.addDrink("The Margarite", 0, data => {
-//     console.log(data);
-// });
 
 // manager.removeDrink(/*id for task to remove*/1, data => {
 //     console.log(data);
@@ -32,23 +41,3 @@ manager.allDrinks(data => {
 // manager.updateDrink(1, "Bazinga", data => {
 //      console.log(data);
 // });
-
-
-// app.get("/api/drinks/:id", (req, res) => {
-//     manager.allDrinks(data => {
-//         res.json(data);
-//     });
-// });
-
-// app.post("/api/drinks", (req, res) => {
-    
-// });
-
-// app.put("/api/drinks/:id", (req, res) => {
-
-// });
-
-// app.delete("/api/drinks/:id", (req, res) => {
-    
-// });
-
