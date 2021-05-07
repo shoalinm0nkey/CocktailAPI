@@ -95,6 +95,8 @@ const searchByName = e => {
     xhr.send(null);
 }
 
+
+
 const saveDrink = (drinkData) => {
     let params = drinkData;
     let xhr = new XMLHttpRequest();
