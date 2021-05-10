@@ -1,0 +1,12 @@
+button {
+    display: block;
+    background-color: #76F7BF;
+    margin: auto;
+    margin-top: .5em;
+    margin-bottom: .5em;
+}
+
+.container {
+    display: grid;
+    padding: 1em;
+}

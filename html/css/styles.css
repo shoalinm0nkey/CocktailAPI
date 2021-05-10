@@ -31,11 +31,17 @@ body {
 main {
     text-align: center;
     background-color: #333;
+    height: 100%;
 }
 
 form {
     margin: 1em;
     display: inline-block;
+}
+
+input {
+    background-color: #76F7BF;
+    border-radius: .5em;
 }
 
 li {
@@ -60,4 +66,8 @@ footer {
 
 small {
     color: white;
+}
+button {
+    background-color: #76F7BF;
+    border-radius: 1em;
 }

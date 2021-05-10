@@ -28,6 +28,9 @@ const renderFavorites = (drinks) => {
         let display = document.createElement("h1");
         let drinkName = drink.drinkName;
 
+        let buttonContainer = document.createElement("div");
+        buttonContainer.className = "container";
+
         let servingGlassData = "Serving Glass: " + drink.servingGlass;
         let servingGlass = document.createElement("h2");
 
@@ -49,6 +52,10 @@ const renderFavorites = (drinks) => {
 
         let editName = document.createElement("button");
         editName.appendChild(document.createTextNode("Edit Name"));
+        editName.addEventListener("click", e => {
+            e.preventDefault();
+            location.href = "editName.html?id=" + drink.id;
+        });
 
         let deleteDrink = document.createElement("button");
         deleteDrink.addEventListener("click", (e) => {
@@ -62,8 +69,9 @@ const renderFavorites = (drinks) => {
         display.appendChild(document.createTextNode(drinkName));
         drinksDiv.appendChild(display);
         drinksDiv.appendChild(thumbNailImage);
-        drinksDiv.appendChild(editName);
-        drinksDiv.appendChild(deleteDrink);
+        drinksDiv.appendChild(buttonContainer);
+        buttonContainer.appendChild(editName);
+        buttonContainer.appendChild(deleteDrink);
         drinksDiv.appendChild(servingGlass);
         servingGlass.appendChild(document.createTextNode(servingGlassData));
         drinksDiv.appendChild(ingredientsContainer);
