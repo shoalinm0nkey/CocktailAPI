@@ -5,6 +5,7 @@ const init = () => {
 }
 
 const getFavorites = () => {
+    console.log('getFavorites');
     let xhr = new XMLHttpRequest();
     let url = "http://localhost:3000/api/drinks";
 
@@ -22,6 +23,7 @@ const getFavorites = () => {
 const renderFavorites = (drinks) => {
     console.log(drinks);
     let drinksDiv = document.querySelector("#favorites");
+    drinksDiv.innerHTML = '';
     drinks.forEach(drink => {
         let display = document.createElement("h1");
         let drinkName = drink.drinkName;
@@ -49,7 +51,12 @@ const renderFavorites = (drinks) => {
         editName.appendChild(document.createTextNode("Edit Name"));
 
         let deleteDrink = document.createElement("button");
+        deleteDrink.addEventListener("click", (e) => {
+            e.preventDefault();
+            removeDrink(drink.id);
+        });
         deleteDrink.appendChild(document.createTextNode("Remove Drink"));
+        
 
 
         display.appendChild(document.createTextNode(drinkName));
@@ -64,6 +71,27 @@ const renderFavorites = (drinks) => {
         instructions.appendChild(document.createTextNode(instructionsData));
 
     });
+}
+
+
+const removeDrink = (id) => {
+    console.log(id);
+    let xhr = new XMLHttpRequest();
+    let url = "http://127.0.0.1:3000/api/drinks/" + id;
+    xhr.open("DELETE", url);
+
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.onreadystatechange = () => {
+        if(xhr.readyState == 4) {
+            console.log("sent", id);
+            getFavorites();
+        }
+        
+    };
+
+    xhr.send(null);
+    return false;
 }
 
 window.addEventListener("load", init);

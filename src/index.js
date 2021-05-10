@@ -34,9 +34,12 @@ app.listen(3000, () => {
     console.log("Hello World 3000");
 });
 
-// manager.removeDrink(/*id for task to remove*/1, data => {
-//     console.log(data);
-// });
+app.delete("/api/drinks/:id", (req, res) => {
+    manager.removeDrink(req.params.id, (data) => {
+        console.log(data);
+    });
+    res.send({"status": "no content"})
+})
 
 // manager.updateDrink(1, "Bazinga", data => {
 //      console.log(data);

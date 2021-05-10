@@ -100,7 +100,7 @@ const searchByName = e => {
 const saveDrink = (drinkData) => {
     let params = drinkData;
     let xhr = new XMLHttpRequest();
-    let url = "http://127.0.0.1:3000/api/drinks"
+    let url = "http://127.0.0.1:3000/api/drinks";
     xhr.open("POST", url);
 
     xhr.setRequestHeader("Content-Type", "application/json");
