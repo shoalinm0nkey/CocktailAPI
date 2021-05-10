@@ -15,6 +15,12 @@ app.get("/api/drinks", (req, res) => {
     });
 });
 
+app.get("/api/drinks/:id", (req, res) => {
+    manager.getDrink(req.params.id, data => {
+        res.json(data)
+    });
+})
+
 app.post("/api/drinks", (req, res) => {
     console.log(req.body);
     let drinkName = req.body.drinkName;
@@ -30,6 +36,16 @@ app.post("/api/drinks", (req, res) => {
 
 })
 
+app.put("/api/drinks/:id", (req, res) => {
+    let drinkId = req.params.id;
+    let newDrinkName = req.body.drinkName;
+
+    manager.updateDrink(drinkId, newDrinkName, data => {
+        console.log(data);
+    });
+    res.send({"status": "204"});
+})
+
 app.listen(3000, () => {
     console.log("Hello World 3000");
 });
@@ -39,8 +55,4 @@ app.delete("/api/drinks/:id", (req, res) => {
         console.log(data);
     });
     res.send({"status": "no content"})
-})
-
-// manager.updateDrink(1, "Bazinga", data => {
-//      console.log(data);
-// });
+});

@@ -28,6 +28,11 @@ class DrinkManager {
         this.runSQL(query, undefined, callback);
     }
 
+    getDrink(id, callback) {
+        let query = "SELECT * FROM SavedDrinks WHERE id=? LIMIT 1";
+        this.runSQL(query, [id], callback);
+    }
+
     addDrink(drinkName, drinkImage, servingGlass, ingredients, instructions, callback) {
         let query = `INSERT INTO SavedDrinks(drinkName, drinkImage, servingGlass, ingredients, instructions) values(?, ?, ?, ?, ?)`;
         this.runSQL(query, [drinkName, drinkImage, servingGlass, ingredients, instructions], callback);
