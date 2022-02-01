@@ -6,8 +6,8 @@ class DrinkManager {
             //change this info
             "host": "127.0.0.1",
             "database": "CocktailAPI",
-            "user": "root",
-            "password": "silverd00"
+            "user": /*****/,
+            "password": //*****
         });
 
         return connection;
